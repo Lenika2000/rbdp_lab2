@@ -23,7 +23,7 @@ public class Client {
                     System.out.println(str);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Connection reset. Check server status!");
             }
         }).start();
     }

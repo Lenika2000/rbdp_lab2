@@ -4,38 +4,49 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Book {
-    private String name;
+    private String title;
     private String authorName;
     private String genres; //жанр
     private LocalDate date;
     private String annotation;
     private String isbn;// Международный стандартный книжный номер
+    private Integer keyWordsCounter;
+    private boolean keyWordsInAnnotation;
 
-    public Book(String name, String authorName, String genres, LocalDate date,
+    public Book(String title, String authorName, String genres, LocalDate date,
                 String annotation, String isbn) {
-        this.name = name;
+        this.title = title;
         this.authorName = authorName;
         this.genres = genres;
         this.date = date;
         this.annotation = annotation;
         this.isbn = isbn;
+        this.keyWordsCounter = 0;
     }
 
     public Book() {
     }
 
+    public void incrementKeyWordsCounter() {
+        this.keyWordsCounter++;
+    }
+
     @Override
     public String toString() {
-        return String.format("\nBook: %s, Author: %s, Genres: %s, Publication Date: %s, ISBN: %s" +
-                "\nAnnotation: %s", name, authorName, genres, date.toString(), isbn, annotation);
+        String result = String.format("\nBook: %s, Author: %s, Genres: %s, Publication Date: %s, ISBN: %s",
+                title, authorName, genres, date.toString(), isbn);
+        if (this.keyWordsInAnnotation) {
+            result += String.format("\nAnnotation: %s", annotation);
+        }
+        return result;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthorName() {
@@ -78,12 +89,28 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Integer getKeyWordsCounter() {
+        return keyWordsCounter;
+    }
+
+    public void setKeyWordsCounter(Integer keyWordsCounter) {
+        this.keyWordsCounter = keyWordsCounter;
+    }
+
+    public boolean hasKeyWordsInAnnotation() {
+        return keyWordsInAnnotation;
+    }
+
+    public void setKeyWordsInAnnotation(boolean keyWordsInAnnotation) {
+        this.keyWordsInAnnotation = keyWordsInAnnotation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(name, book.name) &&
+        return Objects.equals(title, book.title) &&
                 Objects.equals(authorName, book.authorName) &&
                 Objects.equals(genres, book.genres) &&
                 Objects.equals(date, book.date) &&
@@ -93,6 +120,6 @@ public class Book {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, authorName, genres, date, annotation, isbn);
+        return Objects.hash(title, authorName, genres, date, annotation, isbn);
     }
 }

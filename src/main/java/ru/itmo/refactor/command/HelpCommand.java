@@ -16,11 +16,11 @@ public class HelpCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        writer.write("List of commands:\n");
-        writer.write("* \"search\" - find book in catalog\n");
-        writer.write("* \"add\" - add a new item\n");
-        writer.write("* \"help\" - print information about available commands\n");
-        writer.write("* \"quit\" - disconnect from the server and exit the program\n");
+        writer.write("Commands:\n");
+        writer.write("* find - find book in catalog\n");
+        writer.write("* add - add a new book\n");
+        writer.write("* help - get information about commands\n");
+        writer.write("* quit - disconnect from the server and exit the program\n");
         writer.flush();
     }
 }

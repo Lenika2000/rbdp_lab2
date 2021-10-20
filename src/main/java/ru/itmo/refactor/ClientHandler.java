@@ -4,6 +4,7 @@ import ru.itmo.refactor.model.Book;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Collection;
 
 public class ClientHandler implements Runnable {
@@ -27,7 +28,7 @@ public class ClientHandler implements Runnable {
             commandHandler.handleCommands();
             stop();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.print("Client disconnected");
         }
     }
 

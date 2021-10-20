@@ -1,12 +1,15 @@
 package ru.itmo.refactor;
 
 import ru.itmo.refactor.command.*;
+import ru.itmo.refactor.exceptions.IncorrectDataException;
 import ru.itmo.refactor.model.Book;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.net.SocketException;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 
 public class CommandHandler {
@@ -22,7 +25,7 @@ public class CommandHandler {
         this.isRunning = isRunning;
     }
 
-    public void handleCommands() throws IOException {
+    public void handleCommands() throws IOException, SocketException {
         BufferedReader reader = new BufferedReader(this.reader);
         new HelpCommand(writer).execute();
         while (isRunning) {
@@ -30,7 +33,13 @@ public class CommandHandler {
             writer.flush();
             String cmd = reader.readLine().toLowerCase();
             Command command = getCmdFromStr(cmd);
-            command.execute();
+            try {
+                command.execute();
+            } catch (IncorrectDataException e) {
+                writer.write(e.getMessage() + "Command failed, please try again!\n");
+            } catch (DateTimeParseException e) {
+                writer.write("Books's publication date has format: yyyy-mm-dd. Command failed, please try again!\n");
+            }
             writer.write("----\n");
             writer.flush();
         }
@@ -42,7 +51,7 @@ public class CommandHandler {
             case "add":
                 command = new AddCommand(reader, writer, books);
                 break;
-            case "search":
+            case "find":
                 command = new SearchCommand(reader, writer, books);
                 break;
             case "quit":
