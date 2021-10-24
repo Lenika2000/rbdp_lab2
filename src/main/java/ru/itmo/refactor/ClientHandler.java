@@ -4,7 +4,6 @@ import ru.itmo.refactor.model.Book;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Collection;
 
 public class ClientHandler implements Runnable {

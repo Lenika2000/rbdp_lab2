@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.net.SocketException;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
 
@@ -25,12 +24,13 @@ public class CommandHandler {
         this.isRunning = isRunning;
     }
 
-    public void handleCommands() throws IOException, SocketException {
+    public void handleCommands() throws IOException {
         BufferedReader reader = new BufferedReader(this.reader);
         new HelpCommand(writer).execute();
         while (isRunning) {
             writer.write("Input the command:\n");
             writer.flush();
+            // чтение команды от клиента
             String cmd = reader.readLine().toLowerCase();
             Command command = getCmdFromStr(cmd);
             try {

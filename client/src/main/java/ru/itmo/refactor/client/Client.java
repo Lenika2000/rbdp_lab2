@@ -16,6 +16,7 @@ public class Client {
         clientSocket = new Socket(ip, port);
         out = new PrintWriter(clientSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        // печать пользовательской команды в консоль
         new Thread(() -> {
             try {
                 while (isRunning) {
@@ -29,6 +30,7 @@ public class Client {
     }
 
     public void sendMessage(String msg) {
+        // отправка пользовательской команды на сервер
         out.println(msg);
         if (msg.equals("quit")) {
             isRunning = false;
